@@ -20,7 +20,7 @@ func (user User) init (name string, password string, email string, phone string)
 /**
   * @brief copy constructor
   */
-func (user User) copyUser(c_user User) {
+func (user User) CopyUser(c_user User) {
 	c_user.name = user.name
 	c_user.password = user.password
 	user.email = user.email
@@ -31,7 +31,7 @@ func (user User) copyUser(c_user User) {
 * @brief get the name of the user
 * @return   return a string indicate the name of the user
 */
-func (user User) getName() string {
+func (user User) GetName() string {
 	return user.name
 }
 
@@ -39,7 +39,7 @@ func (user User) getName() string {
 * @brief set the name of the user
 * @param   a string indicate the new name of the user
 */
-func (user* User) setName(name string) {
+func (user* User) SetName(name string) {
 	user.name = name
 }
 
@@ -47,7 +47,7 @@ func (user* User) setName(name string) {
 * @brief get the password of the user
 * @return   return a string indicate the password of the user
 */
-func (user User) getPassword() string {
+func (user User) GetPassword() string {
 	return user.password
 }
 
@@ -55,7 +55,7 @@ func (user User) getPassword() string {
 * @brief set the password of the user
 * @param   a string indicate the new password of the user
 */
-func (user* User) setPassword(password string) {
+func (user* User) SetPassword(password string) {
 	user.password = password
 }
 
@@ -63,7 +63,7 @@ func (user* User) setPassword(password string) {
 * @brief get the email of the user
 * @return   return a string indicate the email of the user
 */
-func (user User) getEmail() string {
+func (user User) GetEmail() string {
 	return user.email
 }
 
@@ -71,7 +71,7 @@ func (user User) getEmail() string {
 * @brief set the email of the user
 * @param   a string indicate the new email of the user
 */
-func (user* User) setEmail(email string) {
+func (user* User) SetEmail(email string) {
 	user.email = email
 }
 
@@ -79,7 +79,7 @@ func (user* User) setEmail(email string) {
 * @brief get the phone of the user
 * @return   return a string indicate the phone of the user
 */
-func (user User) getPhone() string {
+func (user User) GetPhone() string {
 	return user.phone
 }
 
@@ -87,6 +87,6 @@ func (user User) getPhone() string {
 * @brief set the phone of the user
 * @param   a string indicate the new phone of the user
 */
-func (user* User) setPhone(phone string) {
+func (user* User) SetPhone(phone string) {
 	user.phone = phone
 }

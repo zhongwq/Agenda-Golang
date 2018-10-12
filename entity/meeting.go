@@ -26,7 +26,7 @@ func (meeting Meeting) init(sponsor string, participators []string, startTime Da
 /**
  * @brief copy constructor of left value
  */
-func (meeting Meeting) copy_User(c_meeting Meeting) {
+func (meeting Meeting) Copy_Meeting(c_meeting Meeting) {
 	c_meeting.sponsor = meeting.sponsor
 	c_meeting.title = meeting.title
 	c_meeting.participators = meeting.participators
@@ -38,7 +38,7 @@ func (meeting Meeting) copy_User(c_meeting Meeting) {
  *   @brief get the meeting's sponsor
  *   @return a string indicate sponsor
  */
-func (meeting Meeting) getSponsor() string {
+func (meeting Meeting) GetSponsor() string {
 	return meeting.sponsor
 }
 
@@ -46,7 +46,7 @@ func (meeting Meeting) getSponsor() string {
  * @brief set the sponsor of a meeting
  * @param  the new sponsor string
  */
-func (meeting* Meeting) setSponsor(sponsor string) {
+func (meeting* Meeting) SetSponsor(sponsor string) {
 	meeting.sponsor = sponsor
 }
 
@@ -54,7 +54,7 @@ func (meeting* Meeting) setSponsor(sponsor string) {
  * @brief  get the participators of a meeting
  * @return return a string array indicate participators
  */
-func (meeting Meeting) getParticipator() []string {
+func (meeting Meeting) GetParticipator() []string {
 	return meeting.participators
 }
 
@@ -62,7 +62,7 @@ func (meeting Meeting) getParticipator() []string {
  *   @brief set the new participators of a meeting
  *   @param the new participators array
  */
-func (meeting* Meeting) setParticipator(participators []string) {
+func (meeting* Meeting) SetParticipator(participators []string) {
 	meeting.participators = participators
 }
 
@@ -70,7 +70,7 @@ func (meeting* Meeting) setParticipator(participators []string) {
  * @brief get the startDate of a meeting
  * @return return a string indicate startDate
  */
-func (meeting Meeting) getStartDate() Date {
+func (meeting Meeting) GetStartDate() Date {
 	return meeting.startDate
 }
 
@@ -78,7 +78,7 @@ func (meeting Meeting) getStartDate() Date {
  * @brief  set the startDate of a meeting
  * @param  the new startdate of a meeting
  */
-func (meeting* Meeting) setStartDate(startTime Date) {
+func (meeting* Meeting) SetStartDate(startTime Date) {
 	meeting.startDate = startTime
 }
 
@@ -86,7 +86,7 @@ func (meeting* Meeting) setStartDate(startTime Date) {
  * @brief get the endDate of a meeting
  * @return a date indicate the endDate
  */
-func (meeting Meeting) getEndDate() Date {
+func (meeting Meeting) GetEndDate() Date {
 	return meeting.endDate
 }
 
@@ -94,7 +94,7 @@ func (meeting Meeting) getEndDate() Date {
  * @brief  set the endDate of a meeting
  * @param  the new enddate of a meeting
  */
-func (meeting* Meeting) setEndDate(endTime Date) {
+func (meeting* Meeting) SetEndDate(endTime Date) {
 	meeting.endDate = endTime
 }
 
@@ -102,7 +102,7 @@ func (meeting* Meeting) setEndDate(endTime Date) {
  * @brief get the title of a meeting
  * @return a date title the endDate
  */
-func (meeting Meeting) getTitle() string {
+func (meeting Meeting) GetTitle() string {
 	return meeting.title
 }
 
@@ -110,7 +110,7 @@ func (meeting Meeting) getTitle() string {
  * @brief  set the title of a meeting
  * @param  the new title of a meeting
  */
-func (meeting* Meeting) setTitle(title string) {
+func (meeting* Meeting) SetTitle(title string) {
 	meeting.title = title
 }
 
@@ -119,7 +119,7 @@ func (meeting* Meeting) setTitle(title string) {
  * @param username the source username
  * @return if the user exit this meeting success
  */
-func (meeting* Meeting) deleteParticipator(username string) {
+func (meeting* Meeting) DeleteParticipator(username string) {
 	size := len(meeting.participators)
 	for i := 0; i< size; i++ {
 		if meeting.participators[i] == username {
@@ -134,8 +134,8 @@ func (meeting* Meeting) deleteParticipator(username string) {
  * @param username the source username
  * @return if the user take part in this meeting success
  */
-func (meeting* Meeting) addParticipator(username string) bool {
-	if meeting.sponsor == username || meeting.isParticipator(username) {
+func (meeting* Meeting) AddParticipator(username string) bool {
+	if meeting.sponsor == username || meeting.IsParticipator(username) {
 		return false
 	}
 	meeting.participators = append(meeting.participators, username)
@@ -147,7 +147,7 @@ func (meeting* Meeting) addParticipator(username string) bool {
  * @param username the source username
  * @return if the user take part in this meeting
  */
-func (meeting Meeting) isParticipator(username string) bool{
+func (meeting Meeting) IsParticipator(username string) bool{
 	for _, user := range meeting.participators {
 		if (user == username) {
 			return true

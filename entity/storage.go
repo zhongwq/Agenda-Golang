@@ -29,7 +29,7 @@ func init() {
  * read file content into memory
  * @return if success, true will be returned
  */
-func readFromFile() bool {
+func ReadFromFile() bool {
 	return false
 }
 
@@ -37,7 +37,7 @@ func readFromFile() bool {
  * write file content from memory
  * @return if success, true will be returned
  */
-func writeToFile() bool {
+func WriteToFile() bool {
 	return false
 }
 
@@ -45,7 +45,7 @@ func writeToFile() bool {
  * create a user
  * @param a user object
  */
-func createUser(u* User) {
+func CreateUser(u* User) {
 
 }
 
@@ -54,7 +54,7 @@ func createUser(u* User) {
  * @param a lambda function as the filter
  * @return a list of fitted users
  */
-func queryUser(filter func (user* User) bool) []string {
+func QueryUser(filter func (user* User) bool) []User {
 	return nil
 }
 
@@ -64,7 +64,7 @@ func queryUser(filter func (user* User) bool) []string {
  * @param a lambda function as the method to update the user
  * @return the number of updated users
  */
-func updateUser(filter func (user* User) bool, switcher func (user* User)) int{
+func UpdateUser(filter func (user* User) bool, switcher func (user* User)) int {
 	return 0
 }
 
@@ -73,7 +73,7 @@ func updateUser(filter func (user* User) bool, switcher func (user* User)) int{
  * @param a lambda function as the filter
  * @return the number of deleted users
  */
-func deleteUser(filter func (user* User) bool) int {
+func DeleteUser(filter func (user* User) bool) int {
 	return 0
 }
 
@@ -81,35 +81,33 @@ func deleteUser(filter func (user* User) bool) int {
  * user log in
  * @param user that login
  */
-func Signin(user* User) {
+func Signin(user* User){
 
 }
-
 
 /**
  * user log out
  * @return whether have error when sync
  */
-func Logout() error {
-	return nil
+func Logout() {
+
 }
 
-
-
-/**
- * create a meeting
- * @param a meeting object
+/***
+ * user log in
+ * @param user that login
  */
-func createMeeting(meeting* Meeting) {
+func CreateMeeting(meeting* Meeting) {
 
 }
 
-/**
+
+/***
  * query meetings
  * @param a lambda function as the filter
  * @return a list of fitted meetings
  */
-func queryMeeting(filter func (meeting* Meeting) bool) []Meeting {
+func QueryMeeting(filter func (meeting* Meeting) bool) []Meeting {
 	return nil
 }
 
@@ -119,7 +117,7 @@ func queryMeeting(filter func (meeting* Meeting) bool) []Meeting {
  * @param a lambda function as the method to update the meeting
  * @return the number of updated meetings
  */
-func updateMeeting(filter func (meeting* Meeting) bool, switcher func (meeting* Meeting)) int {
+func UpdateMeeting(filter func (meeting* Meeting) bool, switcher func (meeting* Meeting)) int {
 	return 0
 }
 
@@ -128,14 +126,14 @@ func updateMeeting(filter func (meeting* Meeting) bool, switcher func (meeting* 
  * @param a lambda function as the filter
  * @return the number of deleted meetings
  */
-func deleteMeeting(filter func (meeting* Meeting) bool) int {
+func DeleteMeeting(filter func (meeting* Meeting) bool) int {
 	return 0
 }
 
 /**
  * sync with the file
  */
-func sync() bool {
+func Sync() error {
 	// 同步三个文件
-	return false
+	return nil
 }
