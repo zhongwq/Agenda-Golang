@@ -4,18 +4,16 @@ import (
 	"time"
 )
 
-type Date time.Time //定义Date类型为time.Time
-
 type Meeting struct {
 	sponsor, title string
 	participators []string
-	startDate, endDate Date
+	startDate, endDate time.Time
 }
 
 /**
  * @brief constructor with argument
  */
-func (meeting Meeting) init(sponsor string, participators []string, startTime Date, endTime Date, title string) {
+func (meeting Meeting) init(sponsor string, participators []string, startTime time.Time, endTime time.Time, title string) {
 	meeting.sponsor = sponsor
 	meeting.title = title
 	meeting.participators = participators
@@ -70,7 +68,7 @@ func (meeting* Meeting) SetParticipator(participators []string) {
  * @brief get the startDate of a meeting
  * @return return a string indicate startDate
  */
-func (meeting Meeting) GetStartDate() Date {
+func (meeting Meeting) GetStartDate() time.Time {
 	return meeting.startDate
 }
 
@@ -78,7 +76,7 @@ func (meeting Meeting) GetStartDate() Date {
  * @brief  set the startDate of a meeting
  * @param  the new startdate of a meeting
  */
-func (meeting* Meeting) SetStartDate(startTime Date) {
+func (meeting* Meeting) SetStartDate(startTime time.Time) {
 	meeting.startDate = startTime
 }
 
@@ -86,7 +84,7 @@ func (meeting* Meeting) SetStartDate(startTime Date) {
  * @brief get the endDate of a meeting
  * @return a date indicate the endDate
  */
-func (meeting Meeting) GetEndDate() Date {
+func (meeting Meeting) GetEndDate() time.Time {
 	return meeting.endDate
 }
 
@@ -94,7 +92,7 @@ func (meeting Meeting) GetEndDate() Date {
  * @brief  set the endDate of a meeting
  * @param  the new enddate of a meeting
  */
-func (meeting* Meeting) SetEndDate(endTime Date) {
+func (meeting* Meeting) SetEndDate(endTime time.Time) {
 	meeting.endDate = endTime
 }
 

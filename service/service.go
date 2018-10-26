@@ -3,11 +3,11 @@ package service
 import (
 	"fmt"
 	"github.com/zhongwq/Agenda-Golang/entity"
+	"time"
 )
 
 type User entity.User
 type Meeting entity.Meeting
-type Date entity.Date
 
 /**
  * check if the username match password
@@ -23,6 +23,7 @@ func userLogIn(userName string, password string) bool {
 		return false
 	})
 	if len(userResult) == 0 {
+		fmt.Println("Error: incorrect Username or Passwd")
 		return false
 	}
 	entity.Signin(&userResult[0])
@@ -43,13 +44,21 @@ func userLogIn(userName string, password string) bool {
  */
 func userRegister(userName string, password string, email string, phone string) bool {
 	user := entity.User{userName, password, email, phone}
-	entity.CreateUser(&user)
-	if err := entity.Sync(); err != nil {
-		fmt.Println("Login: error occur when sign in")
+	if flag, msg := entity.CreateUser(&user); flag == false {
+		fmt.Println(msg)
 		return false
 	}
+	return true
+}
+
+/**
+ * Logout agenda
+ * @return if success, true will be returned
+ */
+func UserLogout() bool {
 	return false
 }
+
 
 /**
  * delete a user
@@ -58,15 +67,38 @@ func userRegister(userName string, password string, email string, phone string) 
  * @return if success, true will be returned
  */
 func deleteUser(userName string, password string) bool {
-	return false
-}
+	userResult := entity.DeleteUser(func(user *entity.User) bool {
+		if user.GetName() == userName && user.GetPassword() == password {
+			return true
+		}
+		return false
+	})
+	if userResult == 0 {
+		fmt.Println("Error: incorrect username or password")
+		return false
+	}
 
+	entity.UpdateMeeting(
+		func(meeting *entity.Meeting) bool {
+			return meeting.IsParticipator(userName)
+		},
+		func(meeting *entity.Meeting) {
+			meeting.DeleteParticipator(userName)
+		})
+
+	entity.DeleteMeeting(func(meeting *entity.Meeting) bool {
+		return meeting.GetSponsor() == userName
+	})
+	return UserLogout()
+}
 /**
  * list all users from storage
  * @return a user list result
  */
-func listAllUsers() []User {
-	return nil
+func listAllUsers() []entity.User {
+	return entity.QueryUser(func (user* entity.User) bool {
+		return true
+	})
 }
 
 
@@ -79,8 +111,78 @@ func listAllUsers() []User {
  * @param endData the meeting's end date
  * @return if success, true will be returned
  */
-func createMeeting(userName string, title string, startDate Date, endDate Date, participator []string) bool {
-	return false
+func createMeeting(userName string, title string, startDate time.Time, endDate time.Time, participator []string) bool {
+	if startDate.After(endDate) {
+		fmt.Println("Create Meeting: startDate should before endDate")
+		return false
+	}
+
+	for i := 0; i < len(participator); i++ {
+		if (userName == participator[i]) {
+			fmt.Println("Create Meeting: participator can;t be sponsor!")
+			return false
+		}
+		userResult := entity.QueryUser(func(user *entity.User) bool {
+			return user.GetName() == participator[i]
+		})
+		if (len(userResult) == 0) {
+			fmt.Println("Create Meeting: Can't find user named " + participator[i] + "!")
+			return false
+		}
+
+		meetingResult := entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+			if meeting.GetSponsor() == participator[i] || meeting.IsParticipator(participator[i]) {
+				if meeting.GetStartDate().Before(startDate) && meeting.GetEndDate().After(startDate) {
+					return true
+				}
+				if meeting.GetStartDate().Before(endDate) && meeting.GetEndDate().After(endDate) {
+					return true
+				}
+				if meeting.GetStartDate().After(startDate) && meeting.GetEndDate().Before(endDate) {
+					return true
+				}
+			}
+			return false
+		})
+		if len(meetingResult) > 0 {
+			fmt.Println("Create Meeting: " + participator[i] + "'s time is conflict!")
+			return false
+		}
+
+		for j := i+1; j < len(participator); j++ {
+			if participator[j] == participator[i] {
+				fmt.Println("Create Meeting: duplicate participator named" + participator[i])
+				return false
+			}
+		}
+	}
+
+	meetingResult := entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.GetSponsor() == userName || meeting.IsParticipator(userName) {
+			if meeting.GetStartDate().Before(startDate) && meeting.GetEndDate().After(startDate) {
+				return true
+			}
+			if meeting.GetStartDate().Before(endDate) && meeting.GetEndDate().After(endDate) {
+				return true
+			}
+			if meeting.GetStartDate().After(startDate) && meeting.GetEndDate().Before(endDate) {
+				return true
+			}
+		}
+		return false
+	})
+
+	if len(meetingResult) > 0 {
+		fmt.Println("Create Meeting: sponsor's time is conflict!")
+		return false
+	}
+
+	if flag, msg := entity.CreateMeeting(&entity.Meeting{userName, title, participator, startDate, endDate}); flag ==false {
+		fmt.Println(msg)
+		return false
+	}
+
+	return true
 }
 
 /**
@@ -89,8 +191,13 @@ func createMeeting(userName string, title string, startDate Date, endDate Date, 
  * @param title the meeting's title
  * @return a meeting list result
  */
-func meetingQueryWithTitle(userName string, title string) []Meeting {
-	return nil
+func meetingQueryWithTitle(userName string, title string) []entity.Meeting {
+	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.GetSponsor() == userName && meeting.GetTitle() == title {
+			return true
+		}
+		return false
+	})
 }
 
 /**
@@ -100,8 +207,21 @@ func meetingQueryWithTitle(userName string, title string) []Meeting {
  * @param endDate time interval's end date
  * @return a meeting list result
  */
-func meetingQueryWithDate(userName string, startDate Date, endDate Date) []Meeting {
-	return nil
+func meetingQueryWithDate(userName string, startDate time.Time, endDate time.Time) []entity.Meeting {
+	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.GetSponsor() == userName || meeting.IsParticipator(userName) {
+			if meeting.GetStartDate().Before(startDate) && meeting.GetEndDate().After(startDate) {
+				return true
+			}
+			if meeting.GetStartDate().Before(endDate) && meeting.GetEndDate().After(endDate) {
+				return true
+			}
+			if meeting.GetStartDate().After(startDate) && meeting.GetEndDate().Before(endDate) {
+				return true
+			}
+		}
+		return false
+	})
 }
 
 /**
@@ -109,8 +229,10 @@ func meetingQueryWithDate(userName string, startDate Date, endDate Date) []Meeti
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllMeetings(userName string) []Meeting {
-	return nil
+func listAllMeetings(userName string) []entity.Meeting {
+	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		return true
+	})
 }
 
 /**
@@ -118,8 +240,13 @@ func listAllMeetings(userName string) []Meeting {
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllSponsorMeetings(userName string) []Meeting{
-	return nil
+func listAllSponsorMeetings(userName string) []entity.Meeting{
+	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.GetSponsor() == userName {
+			return true
+		}
+		return false
+	})
 }
 
 /**
@@ -127,8 +254,13 @@ func listAllSponsorMeetings(userName string) []Meeting{
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllParticipateMeetings(userName string) []Meeting{
-	return nil
+func listAllParticipateMeetings(userName string) []entity.Meeting{
+	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.IsParticipator(userName) {
+			return true
+		}
+		return false
+	})
 }
 
 /**
@@ -138,7 +270,13 @@ func listAllParticipateMeetings(userName string) []Meeting{
  * @return if success, true will be returned
  */
 func deleteMeeting(userName string, title string) bool {
-	return false
+	result := entity.DeleteMeeting(func(meeting *entity.Meeting) bool {
+		if meeting.GetTitle() == title && meeting.GetSponsor() == userName {
+			return true
+		}
+		return false
+	})
+	return result > 0
 }
 
 /**
@@ -147,5 +285,10 @@ func deleteMeeting(userName string, title string) bool {
  * @return if success, true will be returned
  */
 func deleteAllMeetings(userName string) bool {
-	return false
+	return entity.DeleteMeeting(func(meeting *entity.Meeting) bool {
+		if  meeting.GetSponsor() == userName {
+			return true
+		}
+		return false
+	}) > 0
 }

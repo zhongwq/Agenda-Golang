@@ -45,8 +45,8 @@ func WriteToFile() bool {
  * create a user
  * @param a user object
  */
-func CreateUser(u* User) {
-
+func CreateUser(u* User) (bool,string) {
+	return false, ""
 }
 
 /**
@@ -97,8 +97,8 @@ func Logout() {
  * user log in
  * @param user that login
  */
-func CreateMeeting(meeting* Meeting) {
-
+func CreateMeeting(meeting* Meeting) (bool,string) {
+	return false, ""
 }
 
 
