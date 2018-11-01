@@ -40,11 +40,11 @@ var editparticipatorCmd = &cobra.Command{
 		sponsor,flag :=service.GetCurrentUser()
 		if flag==false{
 			fmt.Println("Please Sign in firstly")
-		}else{
+		} else {
 			var flag bool
 			if way=="add"{
 				flag = service.AddMeetingParticipator(sponsor.GetName(), title, participator)
-			}else {
+			} else {
 				flag = service.DeleteMeetingParticipator(sponsor.GetName(), title, participator)
 			}
 			if flag != true {

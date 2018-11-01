@@ -50,6 +50,7 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 	deleteuserCmd.Flags().StringP("title","t","","The title of the meeting you delete")
+  
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// deletemeetingCmd.PersistentFlags().String("foo", "", "A help for foo")

@@ -42,6 +42,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	signinCmd.Flags().StringP("username", "u", "", "sing in username")
 	signinCmd.Flags().StringP("password", "p","","sign in user password")
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// signinCmd.PersistentFlags().String("foo", "", "A help for foo")

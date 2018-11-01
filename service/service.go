@@ -9,8 +9,6 @@ import (
 type User entity.User
 type Meeting entity.Meeting
 
-
-
 /**
  * get the current user
  * @return if success, true will be returned

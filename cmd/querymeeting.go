@@ -46,7 +46,7 @@ var querymeetingCmd = &cobra.Command{
 				meetings:=service.MeetingQueryWithTitle(currentUser.GetName(),title)
 				if len(meetings)== 0{
 					fmt.Println("Cannot find corresponding meeting.")
-				}else{
+				} else {
 					for _, m := range meetings {
 						fmt.Println("=================")
 						fmt.Println("Title: ", m.GetTitle())
@@ -88,6 +88,7 @@ func init() {
 	querymeetingCmd.Flags().StringP("startTime", "s", "", "the start time of the meeting")
 	querymeetingCmd.Flags().StringP("endTime", "e", "", "the end time of the meeting")
 	querymeetingCmd.Flags().StringP("title", "t", "", "the title of the meeting")
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// querymeetingCmd.PersistentFlags().String("foo", "", "A help for foo")

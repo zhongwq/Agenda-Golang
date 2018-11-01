@@ -30,7 +30,7 @@ var clearmeetingsCmd = &cobra.Command{
 		user,flag :=service.GetCurrentUser()
 		if flag==false{
 			fmt.Println("Please Sign in firstly")
-		}else {
+		} else {
 			flag := service.DeleteAllMeetings(user.GetName())
 			if flag == true {
 				fmt.Println("Successfully clear all the meetings")

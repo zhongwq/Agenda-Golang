@@ -27,7 +27,7 @@ var queryuserCmd = &cobra.Command{
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		temp :=service.ListAllUsers()
-		for _, user :=range temp{
+		for _, user := range temp{
 			fmt.Println("================")
 			fmt.Println("Username: ", user.GetName())
 			fmt.Println("Phone: ",user.GetPhone())

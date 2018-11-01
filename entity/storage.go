@@ -77,7 +77,6 @@ func DeleteUser(filter func (user* User) bool) int {
 	return 0
 }
 
-
 /**
  * GetCurrentUser : get current user
  * @return the current user
@@ -86,7 +85,6 @@ func DeleteUser(filter func (user* User) bool) int {
 func GetCurrentUser() (User, bool) {
 	return User{}, false
 }
-
 
 /***
  * user log in
