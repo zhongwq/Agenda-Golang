@@ -17,6 +17,7 @@ package cmd
 import (
 	"Agenda-Golang/service"
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -24,20 +25,21 @@ import (
 var editparticipatorCmd = &cobra.Command{
 	Use:   "editparticipator",
 	Short: "Edit participators in a meeting",
-	Long: ``,
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		way,_ := cmd.Flags().GetString("way")
-		participator,_ := cmd.Flags().GetString("participator")
-		title,_ := cmd.Flags().GetString("title")
-		if way != "delete" && way != "add"{
+		way, _ := cmd.Flags().GetString("way")
+		participator, _ := cmd.Flags().GetString("participator")
+		title, _ := cmd.Flags().GetString("title")
+		if way != "delete" && way != "add" {
 			fmt.Println("Please choose a way you edit the participator(s), add or delete.")
 			return
 		}
+
 		if len(participator) == 0 || title == "" {
 			fmt.Println("Please input title and participator(s)(input like \"name1, name2\")")
 			return
 		}
-		sponsor,flag := service.GetCurrentUser()
+		sponsor, flag := service.GetCurrentUser()
 		if flag == false {
 			fmt.Println("Please Sign in firstly")
 		} else {
@@ -61,7 +63,7 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 	editparticipatorCmd.Flags().StringP("way", "w", "", "Decide the way you edit the participator: add or delete a participator in te meeting.")
-	editparticipatorCmd.Flags().StringSliceP("participator", "p", nil, "participator(s) you want to add, input like \"name1, name2\"")
+	editparticipatorCmd.Flags().StringP("participator", "p", "", "participator(s) you want to add, input like \"name1, name2\"")
 	editparticipatorCmd.Flags().StringP("title", "t", "", "The title of meeting")
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
