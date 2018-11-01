@@ -28,18 +28,18 @@ var registerCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		name, _ := cmd.Flags().GetString("username")
-		password, _ :=cmd.Flags().GetString("password")
+		password, _ := cmd.Flags().GetString("password")
 		email, _ := cmd.Flags().GetString("email")
 		phone, _ := cmd.Flags().GetString("phoneNumber")
 
-		if name =="" || password==""||email==""|| phone=="" {
+		if name == "" || password == "" || email == ""|| phone == "" {
 			fmt.Println("Please provide all your info to register: username[-u], password[-p], email[-e], phoneNumber[-n]")
 			return
 		}
 		flag :=service.UserRegister(name,password,email,phone)
 		if flag == true {
 			fmt.Println("Register Successfully!!");
-		}else{
+		} else {
 			fmt.Println("Fail to register,you may need to check your inputs, check log for details.")
 		}
 	},

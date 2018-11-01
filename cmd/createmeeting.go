@@ -28,10 +28,10 @@ var createmeetingCmd = &cobra.Command{
 	Short: "Create meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		title,_:=cmd.Flags().GetString("title")
-		participator,_:=cmd.Flags().GetStringSlice("participator")
-		startTime,_:=cmd.Flags().GetString("startTime")
-		endTime,_:=cmd.Flags().GetString("endTime")
+		title,_ := cmd.Flags().GetString("title")
+		participator,_ := cmd.Flags().GetStringSlice("participator")
+		startTime,_ := cmd.Flags().GetString("startTime")
+		endTime,_ := cmd.Flags().GetString("endTime")
 
 		if title == "" || len(participator) == 0 ||  startTime == "" || endTime == "" {
 			fmt.Println("Please input title, starttime (like[2006-01-02 15:04:05]),endtime , participator(input should format like \"name1, name2\")")
@@ -41,9 +41,9 @@ var createmeetingCmd = &cobra.Command{
 			fmt.Println("Please sign in firstly")
 			return
 		} else {
-			startDate,_:=time.Parse("2006-01-02 15:04:05",startTime)
-			endDate,_:=time.Parse("2006-01-02 15:04:05",endTime)
-			if f:=service.CreateMeeting(user.GetName(),title,startDate,endDate,participator); f!=true{
+			startDate,_ := time.Parse("2006-01-02 15:04:05",startTime)
+			endDate,_ := time.Parse("2006-01-02 15:04:05",endTime)
+			if f := service.CreateMeeting(user.GetName(),title,startDate,endDate,participator); f!=true{
 				fmt.Println("Fail to create meeting.")
 			}else {
 				fmt.Println("Create meeting successfully!")

@@ -26,10 +26,10 @@ var editparticipatorCmd = &cobra.Command{
 	Short: "Edit participators in a meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		way,_:=cmd.Flags().GetString("way")
-		participator,_:=cmd.Flags().GetString("participator")
-		title,_:=cmd.Flags().GetString("title")
-		if way!="delete" && way!="add"{
+		way,_ := cmd.Flags().GetString("way")
+		participator,_ := cmd.Flags().GetString("participator")
+		title,_ := cmd.Flags().GetString("title")
+		if way != "delete" && way != "add"{
 			fmt.Println("Please choose a way you edit the participator(s), add or delete.")
 			return
 		}
@@ -37,12 +37,12 @@ var editparticipatorCmd = &cobra.Command{
 			fmt.Println("Please input title and participator(s)(input like \"name1, name2\")")
 			return
 		}
-		sponsor,flag :=service.GetCurrentUser()
-		if flag==false{
+		sponsor,flag := service.GetCurrentUser()
+		if flag == false {
 			fmt.Println("Please Sign in firstly")
 		} else {
 			var flag bool
-			if way=="add"{
+			if way == "add" {
 				flag = service.AddMeetingParticipator(sponsor.GetName(), title, participator)
 			} else {
 				flag = service.DeleteMeetingParticipator(sponsor.GetName(), title, participator)

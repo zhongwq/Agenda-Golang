@@ -27,15 +27,15 @@ var deletemeetingCmd = &cobra.Command{
 	Short: "Delete meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		title,_:=cmd.Flags().GetString("title")
-		user,flag :=service.GetCurrentUser()
-		if title==""{
+		title,_ := cmd.Flags().GetString("title")
+		user,flag := service.GetCurrentUser()
+		if title == ""{
 			fmt.Println("Please input the title of the meeting you want to delete")
 			return
 		}
-		if flag==false{
+		if flag == false{
 			fmt.Println("Please Sign in firstly")
-		}else {
+		} else {
 			if dm := service.DeleteMeeting(user.GetName(),title); dm == false {
 				fmt.Println("Fail to delete the meeting")
 			} else {

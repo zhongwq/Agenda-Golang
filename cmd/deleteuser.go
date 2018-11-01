@@ -27,16 +27,16 @@ var deleteuserCmd = &cobra.Command{
 	Short: "Delete user",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		password,_:=cmd.Flags().GetString("password")
-		user,flag :=service.GetCurrentUser()
-		if flag==false{
+		password,_ := cmd.Flags().GetString("password")
+		user,flag := service.GetCurrentUser()
+		if flag == false {
 			fmt.Println("Please Sign in firstly")
-		}else {
-			if password==""{
+		} else {
+			if password == "" {
 				fmt.Println("please input your password to confirm your identity")
 				return
 			}
-			if deleteFlag:=service.DeleteUser(user.GetName(),password); deleteFlag==false{
+			if deleteFlag := service.DeleteUser(user.GetName(),password); deleteFlag==false{
 				fmt.Println("Fail to delete user")
 			} else {
 				fmt.Println("Successfully Delete")

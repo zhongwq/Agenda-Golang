@@ -26,7 +26,7 @@ var queryuserCmd = &cobra.Command{
 	Short: "Query user",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		temp :=service.ListAllUsers()
+		temp := service.ListAllUsers()
 		for _, user := range temp{
 			fmt.Println("================")
 			fmt.Println("Username: ", user.GetName())

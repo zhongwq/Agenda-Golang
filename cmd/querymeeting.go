@@ -27,9 +27,9 @@ var querymeetingCmd = &cobra.Command{
 	Short: "Query meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		title, _ :=cmd.Flags().GetString("title")
-		startTime, _ :=cmd.Flags().GetString("startTime")
-		endTime, _:=cmd.Flags().GetString("endTime")
+		title, _ := cmd.Flags().GetString("title")
+		startTime, _ := cmd.Flags().GetString("startTime")
+		endTime, _ := cmd.Flags().GetString("endTime")
 		if startTime != "" && endTime != "" && title != ""{
 			fmt.Println("You cannot query a meeting both with title and date.")
 			return
@@ -39,12 +39,12 @@ var querymeetingCmd = &cobra.Command{
 			return
 		}
 		currentUser,flag :=service.GetCurrentUser()
-		if flag==false{
+		if flag == false {
 			fmt.Println("Please Sign in firstly")
 		} else {
 			if title != "" {
 				meetings:=service.MeetingQueryWithTitle(currentUser.GetName(),title)
-				if len(meetings)== 0{
+				if len(meetings) == 0 {
 					fmt.Println("Cannot find corresponding meeting.")
 				} else {
 					for _, m := range meetings {
@@ -61,9 +61,9 @@ var querymeetingCmd = &cobra.Command{
 				    }
 				}
 			} else {
-				startDate,_:=time.Parse("2006-01-02 15:04:05",startTime)
-				endDate,_:=time.Parse("2006-01-02 15:04:05",endTime)
-				meetings:=service.MeetingQueryWithDate(currentUser.GetName(),startDate,endDate)
+				startDate,_ := time.Parse("2006-01-02 15:04:05",startTime)
+				endDate,_ := time.Parse("2006-01-02 15:04:05",endTime)
+				meetings := service.MeetingQueryWithDate(currentUser.GetName(),startDate,endDate)
 				for _, m := range meetings {
 					fmt.Println("=================")
 					fmt.Println("Title: ", m.GetTitle())
