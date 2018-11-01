@@ -14,10 +14,10 @@ type Meeting entity.Meeting
  * @return if success, true will be returned
  */
 func GetCurrentUser() (entity.User,bool) {
-	if cu,err := entity.GetCurrentUser(); err != true {
-		return cu, false
+	if currentUser,err := entity.GetCurrentUser(); err != true {
+		return currentUser, false
 	} else {
-		return cu, true
+		return currentUser, true
 	}
 }
 
@@ -68,7 +68,7 @@ func UserRegister(userName string, password string, email string, phone string) 
  * @return if success, true will be returned
  */
 func UserLogout() bool {
-	return false
+	return entity.Logout()
 }
 
 
@@ -205,7 +205,13 @@ func CreateMeeting(userName string, title string, startDate time.Time, endDate t
  * @return a meeting list result
  */
 func AddMeetingParticipator(sponsor string, title string, participator string) bool{
-	return false
+	return entity.UpdateMeeting(
+		func(meeting *entity.Meeting) bool {
+			return meeting.GetSponsor() == sponsor && meeting.GetTitle() == title
+		},
+		func(meeting *entity.Meeting) {
+			meeting.AddParticipator(participator)
+		}) != 0
 }
 
 /**
@@ -216,7 +222,13 @@ func AddMeetingParticipator(sponsor string, title string, participator string) b
  * @return a meeting list result
  */
 func DeleteMeetingParticipator(sponsor string, title string, participator string) bool {
-	return false
+	return entity.UpdateMeeting(
+		func(meeting *entity.Meeting) bool {
+			return meeting.GetSponsor() == sponsor && meeting.GetTitle() == title
+		},
+		func(meeting *entity.Meeting) {
+			meeting.DeleteParticipator(participator)
+		}) != 0
 }
 
 /**

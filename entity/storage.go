@@ -90,7 +90,7 @@ func GetCurrentUser() (User, bool) {
  * user log in
  * @param user that login
  */
-func Signin(user* User){
+func Signin(user* User) {
 
 }
 
@@ -98,8 +98,8 @@ func Signin(user* User){
  * user log out
  * @return whether have error when sync
  */
-func Logout() {
-
+func Logout() bool {
+	return false
 }
 
 /***
