@@ -77,6 +77,15 @@ func DeleteUser(filter func (user* User) bool) int {
 	return 0
 }
 
+/**
+ * GetCurrentUser : get current user
+ * @return the current user
+ * @return error if current user does not exist
+ */
+func GetCurrentUser() (User, bool) {
+	return User{}, false
+}
+
 /***
  * user log in
  * @param user that login

@@ -15,23 +15,44 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // editparticipatorCmd represents the editparticipator command
 var editparticipatorCmd = &cobra.Command{
 	Use:   "editparticipator",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Edit participators in a meeting",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("editparticipator called")
+		way,_:=cmd.Flags().GetString("way")
+		participator,_:=cmd.Flags().GetString("participator")
+		title,_:=cmd.Flags().GetString("title")
+		if way!="delete" && way!="add"{
+			fmt.Println("Please choose a way you edit the participator(s), add or delete.")
+			return
+		}
+		if len(participator) == 0 || title == "" {
+			fmt.Println("Please input title and participator(s)(input like \"name1, name2\")")
+			return
+		}
+		sponsor,flag :=service.GetCurrentUser()
+		if flag==false{
+			fmt.Println("Please Sign in firstly")
+		} else {
+			var flag bool
+			if way=="add"{
+				flag = service.AddMeetingParticipator(sponsor.GetName(), title, participator)
+			} else {
+				flag = service.DeleteMeetingParticipator(sponsor.GetName(), title, participator)
+			}
+			if flag != true {
+				fmt.Println("Fail to edit the participator")
+			} else {
+				fmt.Println("Successfully edit the participator")
+			}
+		}
 	},
 }
 
@@ -39,7 +60,9 @@ func init() {
 	rootCmd.AddCommand(editparticipatorCmd)
 
 	// Here you will define your flags and configuration settings.
-
+	editparticipatorCmd.Flags().StringP("way", "w", "", "Decide the way you edit the participator: add or delete a participator in te meeting.")
+	editparticipatorCmd.Flags().StringSliceP("participator", "p", nil, "participator(s) you want to add, input like \"name1, name2\"")
+	editparticipatorCmd.Flags().StringP("title", "t", "", "The title of meeting")
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// editparticipatorCmd.PersistentFlags().String("foo", "", "A help for foo")

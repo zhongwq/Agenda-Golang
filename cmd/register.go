@@ -15,6 +15,7 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
 	"github.com/spf13/cobra"
 )
@@ -22,16 +23,25 @@ import (
 // registerCmd represents the register command
 var registerCmd = &cobra.Command{
 	Use:   "register",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Register User",
+	Long: `Please provide a username and password to register, and the username cannot have been registered.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		username, _ := cmd.Flags().GetString("user")
-		fmt.Println("register called by " + username)
+
+		name, _ := cmd.Flags().GetString("username")
+		password, _ :=cmd.Flags().GetString("password")
+		email, _ := cmd.Flags().GetString("email")
+		phone, _ := cmd.Flags().GetString("phoneNumber")
+
+		if name =="" || password==""||email==""|| phone=="" {
+			fmt.Println("Please provide all your info to register: username[-u], password[-p], email[-e], phoneNumber[-n]")
+			return
+		}
+		flag :=service.UserRegister(name,password,email,phone)
+		if flag == true {
+			fmt.Println("Register Successfully!!");
+		}else{
+			fmt.Println("Fail to register,you may need to check your inputs, check log for details.")
+		}
 	},
 }
 
@@ -43,7 +53,10 @@ func init() {
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// registerCmd.PersistentFlags().String("foo", "", "A help for foo")
-	registerCmd.PersistentFlags().StringP("user", "u", "", "input username");
+	registerCmd.Flags().StringP("username", "u", "", "username that haven't been registered")
+	registerCmd.Flags().StringP("password", "p", "", "your password, better be longer than or equal to 6 characters")
+	registerCmd.Flags().StringP("email", "m", "","your email address")
+	registerCmd.Flags().StringP("phoneNumber","n", "","your phone number")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// registerCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")

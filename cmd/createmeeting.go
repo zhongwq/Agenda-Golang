@@ -15,7 +15,9 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -23,15 +25,30 @@ import (
 // createmeetingCmd represents the createmeeting command
 var createmeetingCmd = &cobra.Command{
 	Use:   "createmeeting",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Create meeting",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("createmeeting called")
+		title,_:=cmd.Flags().GetString("title")
+		participator,_:=cmd.Flags().GetStringSlice("participator")
+		startTime,_:=cmd.Flags().GetString("startTime")
+		endTime,_:=cmd.Flags().GetString("endTime")
+
+		if title == "" || len(participator) == 0 ||  startTime == "" || endTime == "" {
+			fmt.Println("Please input title, starttime (like[2006-01-02 15:04:05]),endtime , participator(input should format like \"name1, name2\")")
+			return
+		}
+		if user, flag := service.GetCurrentUser(); flag != true {
+			fmt.Println("Please sign in firstly")
+			return
+		} else {
+			startDate,_:=time.Parse("2006-01-02 15:04:05",startTime)
+			endDate,_:=time.Parse("2006-01-02 15:04:05",endTime)
+			if f:=service.CreateMeeting(user.GetName(),title,startDate,endDate,participator); f!=true{
+				fmt.Println("Fail to create meeting.")
+			}else {
+				fmt.Println("Create meeting successfully!")
+			}
+		}
 	},
 }
 
@@ -39,7 +56,10 @@ func init() {
 	rootCmd.AddCommand(createmeetingCmd)
 
 	// Here you will define your flags and configuration settings.
-
+	createmeetingCmd.Flags().StringP("title", "t", "", "the title of meeting")
+	createmeetingCmd.Flags().StringSliceP("participator", "p", nil, "the participator(s) of the meeting, split by comma,input like \"name1, name2\"")
+	createmeetingCmd.Flags().StringP("starttime","s","","the startTime of the meeting")
+	createmeetingCmd.Flags().StringP("endtime", "e", "", "the endTime of the meeting")
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// createmeetingCmd.PersistentFlags().String("foo", "", "A help for foo")

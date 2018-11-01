@@ -15,23 +15,24 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // signinCmd represents the signin command
 var signinCmd = &cobra.Command{
-	Use:   "signin",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "signIn",
+	Short: "User Login",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("signin called")
+		name , _ :=cmd.Flags().GetString("username")
+		password , _ :=cmd.Flags().GetString("password")
+		flag:=service.UserLogIn(name,password)
+		if flag==true{
+			fmt.Println("Sign in Successfully!")
+			return
+		}
 	},
 }
 
@@ -39,6 +40,8 @@ func init() {
 	rootCmd.AddCommand(signinCmd)
 
 	// Here you will define your flags and configuration settings.
+	signinCmd.Flags().StringP("username", "u", "", "sing in username")
+	signinCmd.Flags().StringP("password", "p","","sign in user password")
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:

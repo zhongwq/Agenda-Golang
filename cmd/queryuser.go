@@ -15,23 +15,25 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // queryuserCmd represents the queryuser command
 var queryuserCmd = &cobra.Command{
 	Use:   "queryuser",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Query user",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("queryuser called")
+		temp :=service.ListAllUsers()
+		for _, user := range temp{
+			fmt.Println("================")
+			fmt.Println("Username: ", user.GetName())
+			fmt.Println("Phone: ",user.GetPhone())
+			fmt.Println("Email: ",user.GetEmail())
+			fmt.Println("================")
+		}
 	},
 }
 

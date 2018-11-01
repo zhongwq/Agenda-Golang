@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"github.com/zhongwq/Agenda-Golang/entity"
+	"Agenda-Golang/entity"
 	"time"
 )
 
@@ -10,12 +10,24 @@ type User entity.User
 type Meeting entity.Meeting
 
 /**
+ * get the current user
+ * @return if success, true will be returned
+ */
+func GetCurrentUser() (entity.User,bool) {
+	if cu,err := entity.GetCurrentUser(); err != true {
+		return cu, false
+	} else {
+		return cu, true
+	}
+}
+
+/**
  * check if the username match password
  * @param userName the username want to login
  * @param password the password user enter
  * @return if success, true will be returned
  */
-func userLogIn(userName string, password string) bool {
+func UserLogIn(userName string, password string) bool {
 	userResult := entity.QueryUser(func(user *entity.User) bool {
 		if user.GetName() == userName && user.GetPassword() == password {
 			return true
@@ -42,7 +54,7 @@ func userLogIn(userName string, password string) bool {
  * @param phone new user's phone
  * @return if success, true will be returned
  */
-func userRegister(userName string, password string, email string, phone string) bool {
+func UserRegister(userName string, password string, email string, phone string) bool {
 	user := entity.User{userName, password, email, phone}
 	if flag, msg := entity.CreateUser(&user); flag == false {
 		fmt.Println(msg)
@@ -66,7 +78,7 @@ func UserLogout() bool {
  * @param password user's password
  * @return if success, true will be returned
  */
-func deleteUser(userName string, password string) bool {
+func DeleteUser(userName string, password string) bool {
 	userResult := entity.DeleteUser(func(user *entity.User) bool {
 		if user.GetName() == userName && user.GetPassword() == password {
 			return true
@@ -95,7 +107,7 @@ func deleteUser(userName string, password string) bool {
  * list all users from storage
  * @return a user list result
  */
-func listAllUsers() []entity.User {
+func ListAllUsers() []entity.User {
 	return entity.QueryUser(func (user* entity.User) bool {
 		return true
 	})
@@ -111,7 +123,7 @@ func listAllUsers() []entity.User {
  * @param endData the meeting's end date
  * @return if success, true will be returned
  */
-func createMeeting(userName string, title string, startDate time.Time, endDate time.Time, participator []string) bool {
+func CreateMeeting(userName string, title string, startDate time.Time, endDate time.Time, participator []string) bool {
 	if startDate.After(endDate) {
 		fmt.Println("Create Meeting: startDate should before endDate")
 		return false
@@ -189,9 +201,56 @@ func createMeeting(userName string, title string, startDate time.Time, endDate t
  * search a meeting by username and title
  * @param uesrName the sponsor's userName
  * @param title the meeting's title
+ * @param participator the participator you add to the meeting
  * @return a meeting list result
  */
-func meetingQueryWithTitle(userName string, title string) []entity.Meeting {
+func AddMeetingParticipator(sponsor string, title string, participator string) bool{
+	return false
+}
+
+/**
+ * search a meeting by username and title
+ * @param uesrName the sponsor's userName
+ * @param title the meeting's title
+ * @param participator the participator you delete to the meeting
+ * @return a meeting list result
+ */
+func DeleteMeetingParticipator(sponsor string, title string, participator string) bool {
+	return false
+}
+
+/**
+ * search a meeting by username and title
+ * @param uesrName the sponsor's userName
+ * @param title the meeting's title
+ * @return a meeting list result
+ */
+func QuitMeeting(username string, title string) bool {
+	flag :=entity.QueryMeeting(func (m *entity.Meeting) bool {
+		return m.GetTitle() == title && m.IsParticipator(username) == true
+	})
+	if len(flag) == 0 {
+		return false
+	}
+	entity.UpdateMeeting(func (m *entity.Meeting) bool {
+		return m.IsParticipator(username) == true && m.GetTitle() == title
+	}, func (m *entity.Meeting) {
+		m.DeleteParticipator(username)
+	})
+	entity.DeleteMeeting(func (m *entity.Meeting) bool {
+		return len(m.GetParticipator()) == 0
+	})
+	return true
+}
+
+
+/**
+ * search a meeting by username and title
+ * @param uesrName the sponsor's userName
+ * @param title the meeting's title
+ * @return a meeting list result
+ */
+func MeetingQueryWithTitle(userName string, title string) []entity.Meeting {
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.GetSponsor() == userName && meeting.GetTitle() == title {
 			return true
@@ -207,7 +266,7 @@ func meetingQueryWithTitle(userName string, title string) []entity.Meeting {
  * @param endDate time interval's end date
  * @return a meeting list result
  */
-func meetingQueryWithDate(userName string, startDate time.Time, endDate time.Time) []entity.Meeting {
+func MeetingQueryWithDate(userName string, startDate time.Time, endDate time.Time) []entity.Meeting {
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.GetSponsor() == userName || meeting.IsParticipator(userName) {
 			if meeting.GetStartDate().Before(startDate) && meeting.GetEndDate().After(startDate) {
@@ -229,7 +288,7 @@ func meetingQueryWithDate(userName string, startDate time.Time, endDate time.Tim
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllMeetings(userName string) []entity.Meeting {
+func ListAllMeetings(userName string) []entity.Meeting {
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		return true
 	})
@@ -240,7 +299,7 @@ func listAllMeetings(userName string) []entity.Meeting {
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllSponsorMeetings(userName string) []entity.Meeting{
+func ListAllSponsorMeetings(userName string) []entity.Meeting{
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.GetSponsor() == userName {
 			return true
@@ -254,7 +313,7 @@ func listAllSponsorMeetings(userName string) []entity.Meeting{
  * @param userName user's username
  * @return a meeting list result
  */
-func listAllParticipateMeetings(userName string) []entity.Meeting{
+func ListAllParticipateMeetings(userName string) []entity.Meeting{
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.IsParticipator(userName) {
 			return true
@@ -269,7 +328,7 @@ func listAllParticipateMeetings(userName string) []entity.Meeting{
  * @param title meeting's title
  * @return if success, true will be returned
  */
-func deleteMeeting(userName string, title string) bool {
+func DeleteMeeting(userName string, title string) bool {
 	result := entity.DeleteMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.GetTitle() == title && meeting.GetSponsor() == userName {
 			return true
@@ -284,7 +343,7 @@ func deleteMeeting(userName string, title string) bool {
  * @param userName sponsor's username
  * @return if success, true will be returned
  */
-func deleteAllMeetings(userName string) bool {
+func DeleteAllMeetings(userName string) bool {
 	return entity.DeleteMeeting(func(meeting *entity.Meeting) bool {
 		if  meeting.GetSponsor() == userName {
 			return true

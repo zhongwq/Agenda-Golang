@@ -15,23 +15,28 @@
 package cmd
 
 import (
+	"Agenda-Golang/service"
 	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // exitMeetingCmd represents the exitMeeting command
 var exitMeetingCmd = &cobra.Command{
 	Use:   "exitMeeting",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Exit a meeting",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("exitMeeting called")
+		title,_:=cmd.Flags().GetString("title")
+		currentUser,flag :=service.GetCurrentUser()
+		if flag==false{
+			fmt.Println("Please Sign in firstly")
+		}else{
+			if exitMeeting:=service.QuitMeeting(currentUser.GetName(),title); exitMeeting==true{
+				fmt.Println("Quit meeting successfully!")
+			}else{
+				fmt.Println("Fail to quit meeting.")
+			}
+		}
 	},
 }
 
@@ -39,6 +44,7 @@ func init() {
 	rootCmd.AddCommand(exitMeetingCmd)
 
 	// Here you will define your flags and configuration settings.
+	exitMeetingCmd.Flags().StringP("title", "t", "", "the title of meeting")
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
