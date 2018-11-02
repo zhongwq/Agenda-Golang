@@ -145,16 +145,16 @@ func CreateMeeting(userName string, title string, startDate time.Time, endDate t
 
 	for i := 0; i < len(participator); i++ {
 		if (userName == participator[i]) {
-			fmt.Println("Create Meeting: participator can;t be sponsor!")
-			errLog.Println("Create Meeting: participator can;t be sponsor!")
+			fmt.Println("Create Meeting: participator can`t be sponsor!")
+			errLog.Println("Create Meeting: participator can`t be sponsor!")
 			return false
 		}
 		userResult := entity.QueryUser(func(user *entity.User) bool {
 			return user.GetName() == participator[i]
 		})
 		if (len(userResult) == 0) {
-			fmt.Println("Create Meeting: Can't find user named " + participator[i] + "!")
-			errLog.Println("Create Meeting: Can't find user named " + participator[i] + "!")
+			fmt.Println("Create Meeting: Can`t find user named " + participator[i] + "!")
+			errLog.Println("Create Meeting: Can`t find user named " + participator[i] + "!")
 			return false
 		}
 
@@ -300,13 +300,13 @@ func MeetingQueryWithTitle(userName string, title string) []entity.Meeting {
 func MeetingQueryWithDate(userName string, startDate time.Time, endDate time.Time) []entity.Meeting {
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		if meeting.GetSponsor() == userName || meeting.IsParticipator(userName) {
-			if meeting.GetStartDate().Before(startDate) && meeting.GetEndDate().After(startDate) {
+			if DateBeforeOrEqual(meeting.GetStartDate(),startDate) && DateAfterOrEqual(meeting.GetEndDate(),startDate) {
 				return true
 			}
-			if meeting.GetStartDate().Before(endDate) && meeting.GetEndDate().After(endDate) {
+			if DateBeforeOrEqual(meeting.GetStartDate(),endDate)   && DateAfterOrEqual(meeting.GetEndDate(),endDate) {
 				return true
 			}
-			if meeting.GetStartDate().After(startDate) && meeting.GetEndDate().Before(endDate) {
+			if DateAfterOrEqual(meeting.GetStartDate(),startDate) && DateBeforeOrEqual(meeting.GetEndDate(),endDate) {
 				return true
 			}
 		}
@@ -314,12 +314,22 @@ func MeetingQueryWithDate(userName string, startDate time.Time, endDate time.Tim
 	})
 }
 
+func DateBeforeOrEqual(date1 time.Time, date2 time.Time) bool {
+	return date1.Equal(date2) || date1.Before(date2)
+}
+
+func DateAfterOrEqual(date1 time.Time, date2 time.Time) bool {
+	return date1.Equal(date2) || date1.After(date2)
+}
+
+
+
 /**
  * list all meetings the user take part in
  * @param userName user's username
  * @return a meeting list result
  */
-func ListAllMeetings(userName string) []entity.Meeting {
+func ListAllMeetings() []entity.Meeting {
 	return entity.QueryMeeting(func(meeting *entity.Meeting) bool {
 		return true
 	})

@@ -47,7 +47,7 @@ var querymeetingCmd = &cobra.Command{
 			if title != "" {
 				meetings := service.MeetingQueryWithTitle(currentUser.GetName(), title)
 				if len(meetings) == 0 {
-					fmt.Println("Cannot find corresponding meeting.")
+					fmt.Println("Cannot find any meeting.")
 				} else {
 					for _, m := range meetings {
 						fmt.Println("=================")
@@ -66,17 +66,21 @@ var querymeetingCmd = &cobra.Command{
 				startDate, _ := time.Parse("2006-01-02 15:04:05", startTime)
 				endDate, _ := time.Parse("2006-01-02 15:04:05", endTime)
 				meetings := service.MeetingQueryWithDate(currentUser.GetName(), startDate, endDate)
-				for _, m := range meetings {
-					fmt.Println("=================")
-					fmt.Println("Title: ", m.GetTitle())
-					fmt.Println("Start Time", m.GetStartDate().Format("2006-01-02 15:04:05"))
-					fmt.Println("End Time", m.GetEndDate().Format("2006-01-02 15:04:05"))
-					fmt.Printf("Participator(s): ")
-					for _, p := range m.GetParticipator() {
-						fmt.Printf("%s ", p)
+				if len(meetings) == 0 {
+					fmt.Println("Cannot find any meeting.")
+				} else {
+					for _, m := range meetings {
+						fmt.Println("=================")
+						fmt.Println("Title: ", m.GetTitle())
+						fmt.Println("Start Time", m.GetStartDate().Format("2006-01-02 15:04:05"))
+						fmt.Println("End Time", m.GetEndDate().Format("2006-01-02 15:04:05"))
+						fmt.Printf("Participator(s): ")
+						for _, p := range m.GetParticipator() {
+							fmt.Printf("%s ", p)
+						}
+						fmt.Printf("\n")
+						fmt.Println("=================")
 					}
-					fmt.Printf("\n")
-					fmt.Println("=================")
 				}
 			}
 		}

@@ -1,3 +1,6 @@
 .idea
 Agenda-Golang
-data/*
+data/*.log
+data/*.json
+data/*.txt
+*.exe

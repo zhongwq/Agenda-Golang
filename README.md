@@ -43,8 +43,10 @@
 	- No Parse
 - 删除账户
 	- Command: `deleteuser`
-	- No Parse
+	- Parse:
+		- -p: 密码
 	- Extra: 
+		- 删除用户需要输入密码，否则提示错误信息
 		- 要先登录才能删除登陆的用户，否则提示出错信息
 		- 如有用户登录则删除用户作为发起者的会议，同时将用户从作为参与者的会议中删除
 - 创建会议
@@ -60,17 +62,6 @@
 		- 参与者数量 >= 1，若需要添加多个参与者，用`,`隔开，且添加的参与者需为已注册的用户
 		- 开始时间与结束时间应符合逻辑，有固定输入格式，如：`[2006-01-02 15:04:05]`
 		- 不允许发起者或参与者在此时间段内有其他会议
-- 编辑会议参与者
-	- Command: `editparticipator -t=title -p=participator`
-	- Parse:
-        - -w: 增加或者删除会议参与者
-		- -t: 会议标题
-		- -p: 参与者列表
-	- Extra:
-        - -w参数决定增加还是删除会议参与者，`-w=add`则添加会议参与者，`-w=delete`则删除会议参与者
-		- 仅允许已登录用户对自己发起的仍存在的会议进行增加操作, 否则返回出错信息
-		- 参与者必须为注册用户
-		- 参与者同样需要检查会议时间段内是否空闲
 - 会议查询
 	- Command: `querymeeting -s=starttime -e=endtime`
 	- Parse:
@@ -85,6 +76,20 @@
 		- 已登录的用户可以查询自己的议程在某一时间段(time interval)内的所有会议安排。
 		- 在列表中给出每一会议的起始时间、终止时间、主题、以及发起者和参与者。
 		- 注意，查询会议的结果应包括用户作为`发起者或参与者`的会议。
+- 编辑会议参与者
+	- Command: `editparticipator -t=title -p=participator`
+	- Parse:
+        - -w: 增加或者删除会议参与者
+		- -t: 会议标题
+		- -p: 参与者列表
+	- Extra:
+        - -w参数决定增加还是删除会议参与者，`-w=add`则添加会议参与者，`-w=delete`则删除会议参与者
+		- 仅允许已登录用户对自己发起的仍存在的会议进行增加操作, 否则返回出错信息
+		- 参与者必须为注册用户
+		- 参与者同样需要检查会议时间段内是否空闲
+- 查询当前用户参与或者发起的所有会议
+	- Command `listAllSponOrParticipateMeetings`
+	- No Parse
 - 取消会议
 	- Command: `deletemeeting -t=title`
 	- Parse:
@@ -93,13 +98,18 @@
         - 只允许已登录用户进行此操作
 		- 而且仅允许已登录用户删除自己发起的会议
 - 退出会议
-	- Command: `exitMeeting-t=title`
+	- Command: `exitMeeting -t=title`
 	- Parse:
 		- -t: 会议标题
 	- Extra:
         - 只允许已登录用户进行此操作
 		- 而且仅允许该登录用户退出自己参加的会议
 		- 若因此导致该会议参与人数为0则删除会议
+- 查询所有会议
+	- Command: `listallmeetings`
+	- No Parse
+	- Extra:
+		- 查询所有会议，包括当前用户没有参与到的所有会议
 - 清空会议
 	- Command: `clearmeetings`
 	- No Parse
@@ -108,6 +118,39 @@
 		- 只能删除由已登录用户发起的所有会议
 
 ### 测试
+
+- 测试`register`
+	![](media/15411179078281/测试register.png)
+- 测试`sign in`
+	![](media/15411179078281/测试signIn.png)
+- 测试`log out`
+	![](media/15411179078281/测试logout.png)
+- 测试`queryuser`
+	![](media/15411179078281/测试queryuser.png)
+- 测试`delete user`
+	![](media/15411179078281/测试deleteuser.png)
+- 测试`create meeting`
+	![](media/15411179078281/测试createmeeting_1.png)
+	![](media/15411179078281/测试createmeeting_2.png)
+- 测试`query meeting`
+	![](media/15411179078281/测试querymeeting.png)
+- 测试`edit participator`
+	- 添加会议参与者
+		![](media/15411179078281/测试editparticipator_add.png)
+	- 删除会议参与者
+		![](media/15411179078281/测试editparticipator_delete.png)
+- 测试`exit meeting`
+	![](media/15411179078281/测试exitMeeting.png)
+- 测试`delete meeting`
+	![](media/15411179078281/测试deleteMeeting.png)
+- 测试`clearMeetings`
+	![](media/15411179078281/测试clearMeetings.png)
+- 测试`list all sponsor or participate meetings`
+	![](media/15411179078281/测试listAllSponOrPart_1.png)
+	![](media/15411179078281/测试listAllSponOrPart_2.png)
+- 测试`list all meetings`
+	![](media/15411179078281/测试listAllMeetings.png)
+
 
 ### 体会
 
