@@ -120,35 +120,65 @@
 ### 测试
 
 - 测试`register`
+
 	![](media/15411179078281/测试register.png)
+
 - 测试`sign in`
+
 	![](media/15411179078281/测试signIn.png)
+
 - 测试`log out`
+
 	![](media/15411179078281/测试logout.png)
+
 - 测试`queryuser`
+
 	![](media/15411179078281/测试queryuser.png)
+
 - 测试`delete user`
+
 	![](media/15411179078281/测试deleteuser.png)
+
 - 测试`create meeting`
+
 	![](media/15411179078281/测试createmeeting_1.png)
+
 	![](media/15411179078281/测试createmeeting_2.png)
+
 - 测试`query meeting`
+
 	![](media/15411179078281/测试querymeeting.png)
+
 - 测试`edit participator`
+
 	- 添加会议参与者
+
 		![](media/15411179078281/测试editparticipator_add.png)
+
 	- 删除会议参与者
+
 		![](media/15411179078281/测试editparticipator_delete.png)
+		
 - 测试`exit meeting`
+
 	![](media/15411179078281/测试exitMeeting.png)
+
 - 测试`delete meeting`
+	
 	![](media/15411179078281/测试deleteMeeting.png)
+
 - 测试`clearMeetings`
+
 	![](media/15411179078281/测试clearMeetings.png)
+
 - 测试`list all sponsor or participate meetings`
+
 	![](media/15411179078281/测试listAllSponOrPart_1.png)
+
 	![](media/15411179078281/测试listAllSponOrPart_2.png)
+
 - 测试`list all meetings`
+
 	![](media/15411179078281/测试listAllMeetings.png)
 
 
