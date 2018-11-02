@@ -25,6 +25,7 @@ var errorlog *log.Logger
  * Initial variables
  */
 func init() {
+	dirty = false
 	errorlog = logInit.Error
 	gopath := os.Getenv("GOPATH")
 	userinfoPath = filepath.Join(gopath, "/src/Agenda-Golang/data/userdata.json")
@@ -77,22 +78,18 @@ func ReadFromFile() bool {
 func WriteToFile() bool {
 	// Write user data
 	data, _ := json.Marshal(userList)
-	if len(userList) != 0 {
-		err := ioutil.WriteFile(userinfoPath, data, 0644)
-		if err != nil {
-			errorlog.Println("Write user data failed")
-			return false
-		}
+	err := ioutil.WriteFile(userinfoPath, data, 0644)
+	if err != nil {
+		errorlog.Println("Write user data failed")
+		return false
 	}
 
 	// Write meeting data
 	data, _ = json.Marshal(meetingList)
-	if len(meetingList) != 0 {
-		err := ioutil.WriteFile(meetinginfoPath, data, 0644)
-		if err != nil {
-			errorlog.Println("Write meeting data failed")
-			return false
-		}
+	err = ioutil.WriteFile(meetinginfoPath, data, 0644)
+	if err != nil {
+		errorlog.Println("Write meeting data failed")
+		return false
 	}
 	return true
 }
