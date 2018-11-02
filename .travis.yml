@@ -4,12 +4,6 @@ go:
 - 1.8
 - tip
 
-notifications:
-  email: false
-
-go_import_path:
-#/
-
 before_install:
 - mv $HOME/gopath/src/github.com/zhongwq/Agenda-Golang $HOME/gopath/src
 #install: true
