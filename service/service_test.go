@@ -103,7 +103,7 @@ func TestMeetingQueryWithDate(test *testing.T) {
 }
 
 func TestListAllMeetings(test *testing.T) {
-	meeting := ListAllMeetings("1")
+	meeting := ListAllMeetings()
 	if len(meeting) != 1 {
 		test.Error("error")
 	}
