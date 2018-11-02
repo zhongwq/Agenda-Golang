@@ -1,0 +1,18 @@
+language: go
+
+go:
+- 1.8
+- tip
+
+notifications:
+  email: false
+
+go_import_path:
+#/
+
+before_install:
+#install: true
+
+script:
+- cd $HOME/gopath/src/agenda-go-cli
+- go test -v ./...
