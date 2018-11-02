@@ -1,0 +1,69 @@
+INFO: 2018/11/02 17:44:48 register.go:29: Register Called.
+INFO: 2018/11/02 17:51:33 signin.go:29: Sign in Called.
+INFO: 2018/11/02 17:52:09 logout.go:29: Log out Called.
+INFO: 2018/11/02 17:52:38 signin.go:29: Sign in Called.
+INFO: 2018/11/02 17:52:59 queryuser.go:29: Query User Called.
+INFO: 2018/11/02 17:53:49 deleteuser.go:30: Delete User Called.
+INFO: 2018/11/02 17:54:07 queryuser.go:29: Query User Called.
+INFO: 2018/11/02 17:54:49 signin.go:29: Sign in Called.
+INFO: 2018/11/02 17:56:09 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:02:03 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:08:52 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:09:08 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:09:19 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:20:35 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:22:56 editparticipator.go:30: Edit Participator Called.
+INFO: 2018/11/02 18:23:02 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:24:22 register.go:29: Register Called.
+INFO: 2018/11/02 18:24:37 editparticipator.go:30: Edit Participator Called.
+INFO: 2018/11/02 18:24:41 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:45:40 editparticipator.go:30: Edit Participator Called.
+INFO: 2018/11/02 18:45:49 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:45:52 editparticipator.go:30: Edit Participator Called.
+INFO: 2018/11/02 18:45:54 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:46:31 listallmeetings.go:30: listallmeetings called
+INFO: 2018/11/02 18:47:09 listAllSponOrParticipateMeetings.go:29: listAllSponOrParticipateMeetings called
+INFO: 2018/11/02 18:49:25 logout.go:29: Log out Called.
+INFO: 2018/11/02 18:49:38 signin.go:29: Sign in Called.
+INFO: 2018/11/02 18:50:00 exitMeeting.go:29: Exit Meeting Called.
+INFO: 2018/11/02 18:50:05 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:50:51 exitMeeting.go:29: Exit Meeting Called.
+INFO: 2018/11/02 18:50:55 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:51:02 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:51:18 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:51:32 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:51:38 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:51:54 logout.go:29: Log out Called.
+INFO: 2018/11/02 18:52:00 signin.go:29: Sign in Called.
+INFO: 2018/11/02 18:52:05 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:53:28 exitMeeting.go:29: Exit Meeting Called.
+INFO: 2018/11/02 18:53:30 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:58:51 deletemeeting.go:30: Delete Meeting Called.
+INFO: 2018/11/02 18:58:54 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 18:59:20 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:59:32 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:59:38 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:59:46 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:59:52 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 18:59:56 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:00:11 deletemeeting.go:30: Delete Meeting Called.
+INFO: 2018/11/02 19:00:14 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:00:57 clearmeetings.go:30: Clear Meetings Called.
+INFO: 2018/11/02 19:00:59 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:06:35 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:07:23 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:07:42 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 19:07:44 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 19:07:47 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:07:52 clearmeetings.go:30: Clear Meetings Called.
+INFO: 2018/11/02 19:07:55 querymeeting.go:31: Query Meeting Called.
+INFO: 2018/11/02 19:13:43 listallmeetings.go:30: listallmeetings called
+INFO: 2018/11/02 19:13:53 listallmeetings.go:30: listallmeetings called
+INFO: 2018/11/02 19:14:33 listAllSponOrParticipateMeetings.go:29: listAllSponOrParticipateMeetings called
+INFO: 2018/11/02 19:14:47 listAllSponOrParticipateMeetings.go:29: listAllSponOrParticipateMeetings called
+INFO: 2018/11/02 19:14:57 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 19:15:03 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 19:15:08 createmeeting.go:31: Create Meeting Called.
+INFO: 2018/11/02 19:15:12 listAllSponOrParticipateMeetings.go:29: listAllSponOrParticipateMeetings called
+INFO: 2018/11/02 19:16:51 listAllSponOrParticipateMeetings.go:29: listAllSponOrParticipateMeetings called
+INFO: 2018/11/02 19:19:35 listallmeetings.go:30: listallmeetings called

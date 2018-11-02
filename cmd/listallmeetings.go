@@ -21,42 +21,48 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deletemeetingCmd represents the deletemeeting command
-var deletemeetingCmd = &cobra.Command{
-	Use:   "deletemeeting",
-	Short: "Delete meeting",
+// listallmeetingsCmd represents the listallmeetings command
+var listallmeetingsCmd = &cobra.Command{
+	Use:   "listallmeetings",
+	Short: "A brief description of your command",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		infoLog.Println("Delete Meeting Called.")
-		title,_ := cmd.Flags().GetString("title")
-		user,flag := service.GetCurrentUser()
-		if title == ""{
-			fmt.Println("Please input the title of the meeting you want to delete")
-			return
-		}
+		infoLog.Println("listallmeetings called")
+		_,flag :=service.GetCurrentUser()
 		if flag == false{
 			fmt.Println("Please Sign in firstly")
-		} else {
-			if dm := service.DeleteMeeting(user.GetName(),title); dm == false {
-				fmt.Println("Fail to delete the meeting")
+		} else{
+			meetings := service.ListAllMeetings()
+			if len(meetings) == 0 {
+				fmt.Println("Cannot find any corresponding meeting.")
 			} else {
-				fmt.Println("Delete Successfully")
+				for _, m := range meetings {
+					fmt.Println("=================")
+					fmt.Println("Title: ", m.GetTitle())
+					fmt.Println("Start Time", m.GetStartDate().Format("2006-01-02 15:04:05"))
+					fmt.Println("End Time", m.GetEndDate().Format("2006-01-02 15:04:05"))
+					fmt.Printf("Participator(s): ")
+					for _, p := range m.GetParticipator() {
+						fmt.Printf("%s ", p)
+					}
+					fmt.Printf("\n")
+					fmt.Println("=================")
+				}
 			}
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(deletemeetingCmd)
+	rootCmd.AddCommand(listallmeetingsCmd)
 
 	// Here you will define your flags and configuration settings.
-	deletemeetingCmd.Flags().StringP("title","t","","The title of the meeting you delete")
-  
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// deletemeetingCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// listallmeetingsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// deletemeetingCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// listallmeetingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
