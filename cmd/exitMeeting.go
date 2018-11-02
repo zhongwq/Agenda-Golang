@@ -26,6 +26,7 @@ var exitMeetingCmd = &cobra.Command{
 	Short: "Exit a meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Exit Meeting Called.")
 		title,_ := cmd.Flags().GetString("title")
 		currentUser,flag := service.GetCurrentUser()
 		if flag == false{

@@ -15,13 +15,21 @@
 package cmd
 
 import (
+	"Agenda-Golang/logInit"
 	"fmt"
+	"log"
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+var infoLog *log.Logger
+
+func init(){
+	infoLog=logInit.Info;
+}
 
 var cfgFile string
 

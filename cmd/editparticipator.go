@@ -27,6 +27,7 @@ var editparticipatorCmd = &cobra.Command{
 	Short: "Edit participators in a meeting",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Edit Participator Called.")
 		way, _ := cmd.Flags().GetString("way")
 		participator, _ := cmd.Flags().GetString("participator")
 		title, _ := cmd.Flags().GetString("title")

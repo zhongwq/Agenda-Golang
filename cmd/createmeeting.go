@@ -28,6 +28,7 @@ var createmeetingCmd = &cobra.Command{
 	Short: "Create meeting",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Create Meeting Called.")
 		title, _ := cmd.Flags().GetString("title")
 		participator, _ := cmd.Flags().GetStringSlice("participator")
 		startTime, _ := cmd.Flags().GetString("starttime")

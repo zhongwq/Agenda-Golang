@@ -27,6 +27,7 @@ var deletemeetingCmd = &cobra.Command{
 	Short: "Delete meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Delete Meeting Called.")
 		title,_ := cmd.Flags().GetString("title")
 		user,flag := service.GetCurrentUser()
 		if title == ""{
