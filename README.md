@@ -1,4 +1,5 @@
 # Agenda-Golang Readme
+[![Build Status](https://travis-ci.org/zhongwq/Agenda-Golang.svg?branch=master)](https://travis-ci.org/zhongwq/Agenda-Golang)
 
 ### 小组成员及分工
 
