@@ -16,9 +16,6 @@
 
 ### cmd命令设计
 
-
-### 命令
-
 - 注册
 	- Command: `register -u=username -p=password -m=mail -n=phoneNumber`
 	- Parse:
