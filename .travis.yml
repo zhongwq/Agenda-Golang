@@ -15,5 +15,5 @@ before_install:
 #install: true
 
 script:
-- cd $HOME/gopath/src/agenda-go-cli
+- cd $HOME/gopath/src/Agenda-Golang
 - go test -v ./...
