@@ -2,12 +2,22 @@ package service
 
 import (
 	"Agenda-Golang/entity"
+	"Agenda-Golang/logInit"
 	"fmt"
+	"log"
 	"time"
 )
 
 type User entity.User
 type Meeting entity.Meeting
+
+var infoLog *log.Logger
+var errLog *log.Logger
+
+func init(){
+	infoLog = logInit.Info;
+	errLog = logInit.Error;
+}
 
 /**
  * get the current user
@@ -36,11 +46,13 @@ func UserLogIn(userName string, password string) bool {
 	})
 	if len(userResult) == 0 {
 		fmt.Println("Error: incorrect Username or Passwd")
+		errLog.Println("Error: incorrect Username or Passwd");
 		return false
 	}
 	entity.Signin(&userResult[0])
 	if err := entity.Sync(); err != nil {
 		fmt.Println("Login: error occur when sign in")
+		errLog.Println("Login: error occur when sign in")
 		return false
 	}
 	return true
@@ -87,6 +99,7 @@ func DeleteUser(userName string, password string) bool {
 	})
 	if userResult == 0 {
 		fmt.Println("Error: incorrect username or password")
+		errLog.Println("Error: incorrect username or password")
 		return false
 	}
 
@@ -126,12 +139,14 @@ func ListAllUsers() []entity.User {
 func CreateMeeting(userName string, title string, startDate time.Time, endDate time.Time, participator []string) bool {
 	if startDate.After(endDate) {
 		fmt.Println("Create Meeting: startDate should before endDate")
+		errLog.Println("Create Meeting: startDate should before endDate")
 		return false
 	}
 
 	for i := 0; i < len(participator); i++ {
 		if (userName == participator[i]) {
 			fmt.Println("Create Meeting: participator can;t be sponsor!")
+			errLog.Println("Create Meeting: participator can;t be sponsor!")
 			return false
 		}
 		userResult := entity.QueryUser(func(user *entity.User) bool {
@@ -139,6 +154,7 @@ func CreateMeeting(userName string, title string, startDate time.Time, endDate t
 		})
 		if (len(userResult) == 0) {
 			fmt.Println("Create Meeting: Can't find user named " + participator[i] + "!")
+			errLog.Println("Create Meeting: Can't find user named " + participator[i] + "!")
 			return false
 		}
 
@@ -158,12 +174,14 @@ func CreateMeeting(userName string, title string, startDate time.Time, endDate t
 		})
 		if len(meetingResult) > 0 {
 			fmt.Println("Create Meeting: " + participator[i] + "'s time is conflict!")
+			errLog.Println("Create Meeting: " + participator[i] + "'s time is conflict!")
 			return false
 		}
 
 		for j := i+1; j < len(participator); j++ {
 			if participator[j] == participator[i] {
 				fmt.Println("Create Meeting: duplicate participator named" + participator[i])
+				errLog.Println("Create Meeting: duplicate participator named" + participator[i])
 				return false
 			}
 		}
@@ -186,6 +204,7 @@ func CreateMeeting(userName string, title string, startDate time.Time, endDate t
 
 	if len(meetingResult) > 0 {
 		fmt.Println("Create Meeting: sponsor's time is conflict!")
+		errLog.Println("Create Meeting: sponsor's time is conflict!")
 		return false
 	}
 

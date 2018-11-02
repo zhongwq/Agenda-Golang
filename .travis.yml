@@ -6,7 +6,6 @@ go:
 
 before_install:
 - mv $HOME/gopath/src/github.com/zhongwq/Agenda-Golang $HOME/gopath/src
-#install: true
 
 script:
 - cd $HOME/gopath/src/Agenda-Golang
