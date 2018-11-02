@@ -152,10 +152,13 @@
 - 测试`edit participator`
 
 	- 添加会议参与者
+
 		![](media/15411179078281/测试editparticipator_add.png)
 
 	- 删除会议参与者
+
 		![](media/15411179078281/测试editparticipator_delete.png)
+		
 - 测试`exit meeting`
 
 	![](media/15411179078281/测试exitMeeting.png)
