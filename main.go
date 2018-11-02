@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/zhongwq/Agenda-Golang/cmd"
+import "Agenda-Golang/cmd"
 
 func main() {
 	cmd.Execute()

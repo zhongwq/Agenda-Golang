@@ -27,8 +27,8 @@ var clearmeetingsCmd = &cobra.Command{
 	Short: "Clear all the meetings",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		user,flag :=service.GetCurrentUser()
-		if flag==false{
+		user,flag := service.GetCurrentUser()
+		if flag == false {
 			fmt.Println("Please Sign in firstly")
 		} else {
 			flag := service.DeleteAllMeetings(user.GetName())

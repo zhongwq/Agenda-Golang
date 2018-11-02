@@ -26,10 +26,10 @@ var signinCmd = &cobra.Command{
 	Short: "User Login",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		name , _ :=cmd.Flags().GetString("username")
-		password , _ :=cmd.Flags().GetString("password")
-		flag:=service.UserLogIn(name,password)
-		if flag==true{
+		name , _ := cmd.Flags().GetString("username")
+		password , _ := cmd.Flags().GetString("password")
+		flag := service.UserLogIn(name,password)
+		if flag == true{
 			fmt.Println("Sign in Successfully!")
 			return
 		}

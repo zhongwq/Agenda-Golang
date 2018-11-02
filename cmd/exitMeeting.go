@@ -26,14 +26,14 @@ var exitMeetingCmd = &cobra.Command{
 	Short: "Exit a meeting",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		title,_:=cmd.Flags().GetString("title")
-		currentUser,flag :=service.GetCurrentUser()
-		if flag==false{
+		title,_ := cmd.Flags().GetString("title")
+		currentUser,flag := service.GetCurrentUser()
+		if flag == false{
 			fmt.Println("Please Sign in firstly")
-		}else{
-			if exitMeeting:=service.QuitMeeting(currentUser.GetName(),title); exitMeeting==true{
+		} else {
+			if exitMeeting := service.QuitMeeting(currentUser.GetName(),title); exitMeeting == true{
 				fmt.Println("Quit meeting successfully!")
-			}else{
+			} else {
 				fmt.Println("Fail to quit meeting.")
 			}
 		}
