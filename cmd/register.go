@@ -26,7 +26,7 @@ var registerCmd = &cobra.Command{
 	Short: "Register User",
 	Long: `Please provide a username and password to register, and the username cannot have been registered.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		infoLog.Println("Register Called.")
 		name, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
 		email, _ := cmd.Flags().GetString("email")

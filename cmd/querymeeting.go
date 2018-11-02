@@ -28,6 +28,7 @@ var querymeetingCmd = &cobra.Command{
 	Short: "Query meeting",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Query Meeting Called.")
 		title, _ := cmd.Flags().GetString("title")
 		startTime, _ := cmd.Flags().GetString("startTime")
 		endTime, _ := cmd.Flags().GetString("endTime")

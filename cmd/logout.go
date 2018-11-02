@@ -26,6 +26,7 @@ var logoutCmd = &cobra.Command{
 	Short: "User Logout",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Log out Called.")
 		_,flag :=service.GetCurrentUser()
 		if flag == false{
 			fmt.Println("Please Sign in firstly")

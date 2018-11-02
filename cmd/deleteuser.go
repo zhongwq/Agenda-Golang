@@ -27,6 +27,7 @@ var deleteuserCmd = &cobra.Command{
 	Short: "Delete user",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		infoLog.Println("Delete User Called.")
 		password,_ := cmd.Flags().GetString("password")
 		user,flag := service.GetCurrentUser()
 		if flag == false {
